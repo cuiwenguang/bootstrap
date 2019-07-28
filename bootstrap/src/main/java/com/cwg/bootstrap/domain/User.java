@@ -9,6 +9,10 @@ public class User {
 
     private String email;
 
+    private String salt;
+
+    private Boolean isAdmin;
+
     public Integer getUserId() {
         return userId;
     }
@@ -39,5 +43,21 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email == null ? null : email.trim();
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt == null ? null : salt.trim();
+    }
+
+    public Boolean getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(Boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 }
