@@ -1,4 +1,4 @@
-package com.cwg.bootstrap.common.web;
+package com.cwg.bootstrap.web;
 
 public class JsonResult {
 	private int code;

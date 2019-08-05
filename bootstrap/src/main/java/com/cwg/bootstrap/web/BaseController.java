@@ -1,9 +1,17 @@
-package com.cwg.bootstrap.common.web;
+package com.cwg.bootstrap.web;
 
-import org.springframework.web.bind.annotation.RestController;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-@RestController
+import org.springframework.beans.factory.annotation.Autowired;
+
 public class BaseController {
+	@Autowired
+	private HttpServletRequest request;
+	
+	@Autowired
+	private HttpServletResponse response;
+	
 	public JsonResult success(Object data) {
 		JsonResult result = new JsonResult();
 		result.setCode(200);
@@ -23,5 +31,11 @@ public class BaseController {
 		result.setCode(410);
 		result.setMsg(msg);
 		return result;
+	}
+	
+	public void pager() {
+		int num = Integer.parseInt(request.getParameter("pageNum"));
+		int size = Integer.parseInt(request.getParameter("pageSize"));
+		
 	}
 }

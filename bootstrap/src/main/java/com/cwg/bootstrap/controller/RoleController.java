@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cwg.bootstrap.common.web.BaseController;
-import com.cwg.bootstrap.common.web.JsonResult;
 import com.cwg.bootstrap.domain.Role;
 import com.cwg.bootstrap.service.IRoleService;
+import com.cwg.bootstrap.web.BaseController;
+import com.cwg.bootstrap.web.JsonResult;
 
 @RestController
 @RequestMapping("/sys/role")
