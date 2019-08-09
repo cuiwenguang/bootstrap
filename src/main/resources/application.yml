@@ -1,0 +1,55 @@
+bootstrap:
+  name: cwg-bootstrap
+  version: 1.0
+  
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  tomcat:
+    # tomcat uri 编码
+    uri-encoding: UTF-8
+    # tomcat 最大线程数 默认200
+    max-threads: 800
+    # tomcat 启动初始化的线程数， 默认25
+    min-spare-threads: 30
+
+logging:
+  level:
+    com.cwg: debug
+    org.springframework: warn
+    org.spring.springboot.dao: debug
+    org.mybatis.generator.internal.db.DatabaseIntrospector: warn
+    
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1:3306/mydb?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    druid:
+      initialSize: 5
+      minIdle: 5
+      maxActive: 20
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      # 合并多个DruidDataSource的监控数据
+      useGlobalDataSourceStat: true
+
+mybatis:
+  mapper-locations: classpath:/mapper/**/*.xml
+  type-aliases-package: com.cwg.bootstrap.*.model
