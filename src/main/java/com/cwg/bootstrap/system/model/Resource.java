@@ -1,23 +1,32 @@
 package com.cwg.bootstrap.system.model;
 
-public class Resource {
-    private Integer resourceId;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
+import org.hibernate.validator.constraints.Length;
+
+public class Resource {
+    private Long resourceId;
+    
+    @NotBlank(message = "资源名称不能为空")
+    @Length(min = 2, max = 20, message = "名称长度在{min}~{max}之间" )
     private String resourceName;
 
+    @NotBlank(message = "资源类型不能为空")
+    @Pattern(regexp = "F|M|C", message = "资源类型数据非法")
     private String resourceType;
 
     private String resourceCode;
 
     private String resourcePath;
 
-    private Integer resourceParent;
+    private Long resourceParent;
 
-    public Integer getResourceId() {
+    public Long getResourceId() {
         return resourceId;
     }
 
-    public void setResourceId(Integer resourceId) {
+    public void setResourceId(Long resourceId) {
         this.resourceId = resourceId;
     }
 
@@ -53,11 +62,11 @@ public class Resource {
         this.resourcePath = resourcePath == null ? null : resourcePath.trim();
     }
 
-    public Integer getResourceParent() {
+    public Long getResourceParent() {
         return resourceParent;
     }
 
-    public void setResourceParent(Integer resourceParent) {
+    public void setResourceParent(Long resourceParent) {
         this.resourceParent = resourceParent;
     }
 }

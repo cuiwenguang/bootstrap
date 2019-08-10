@@ -1,15 +1,15 @@
 package com.cwg.bootstrap.system.model;
 
 public class Role {
-    private Integer roleId;
+    private Long roleId;
 
     private String roleName;
 
-    public Integer getRoleId() {
+    public Long getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Integer roleId) {
+    public void setRoleId(Long roleId) {
         this.roleId = roleId;
     }
 
