@@ -1,5 +1,6 @@
 package com.cwg.bootstrap.system.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +33,23 @@ public class ResourceServiceImpl implements IResourceService {
 	}
 
 	@Override
-	public List<Resource> getList(Resource resource) {
+	public List<Resource> getTreeList() {
 		// TODO Auto-generated method stub
-		return null;
+		List<Resource> resources = resourceMapper.selectList();
+		return buildTree(resources, 0L);
 	}
+	
+	// 构造资源树
+	private List<Resource> buildTree(List<Resource> sourceData, Long parentId) {
+		List<Resource> result = new ArrayList<>();
+		for (Resource resource : sourceData) {
+			if(resource.getResourceParent().equals(parentId)) {
+				resource.setChildren(buildTree(sourceData, resource.getResourceId()));
+				result.add(resource);
+			}
+		}
+		return result;
+	}
+	
 
 }

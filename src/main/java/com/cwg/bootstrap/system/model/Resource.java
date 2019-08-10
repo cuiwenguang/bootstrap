@@ -1,5 +1,7 @@
 package com.cwg.bootstrap.system.model;
 
+import java.util.List;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
@@ -21,8 +23,18 @@ public class Resource {
     private String resourcePath;
 
     private Long resourceParent;
+    
+    private List<Resource> children;
 
-    public Long getResourceId() {
+    public List<Resource> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<Resource> children) {
+		this.children = children;
+	}
+
+	public Long getResourceId() {
         return resourceId;
     }
 

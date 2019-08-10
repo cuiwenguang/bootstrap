@@ -12,6 +12,11 @@
   <sql id="Base_Column_List">
     resource_id, resource_name, resource_type, resource_code, resource_path, resource_parent
   </sql>
+  <select id="selectList" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from sys_resource
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

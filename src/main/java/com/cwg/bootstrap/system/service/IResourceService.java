@@ -11,5 +11,5 @@ public interface IResourceService {
 	public int add(Resource resource);
 	public int save(Resource resource);
 	public int remove(Long resourceId);
-	public List<Resource> getList(Resource resource);
+	public List<Resource> getTreeList();
 }
