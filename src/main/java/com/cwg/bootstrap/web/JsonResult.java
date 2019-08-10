@@ -2,6 +2,9 @@ package com.cwg.bootstrap.web;
 
 public class JsonResult {
 	private int code;
+	private String msg;
+	private Object data;
+	
 	public int getCode() {
 		return code;
 	}
@@ -20,6 +23,4 @@ public class JsonResult {
 	public void setData(Object data) {
 		this.data = data;
 	}
-	private String msg;
-	private Object data;
 }
