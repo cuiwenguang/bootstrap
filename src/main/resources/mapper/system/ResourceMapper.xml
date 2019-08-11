@@ -17,6 +17,12 @@
   	<include refid="Base_Column_List" />
   	from sys_resource
   </select>
+  <select id="selectChildrenCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from sys_resource
+  	where resourece_parent=#{resourceId}
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -24,8 +30,8 @@
     where resource_id = #{resourceId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from sys_resource
-    where resource_id = #{resourceId,jdbcType=INTEGER}
+  	delete from sys_role_resource where resource_id = #{resourceId,jdbcType=INTEGER}
+    delete from sys_resource where resource_id = #{resourceId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.cwg.bootstrap.system.model.Resource">
     insert into sys_resource (resource_id, resource_name, resource_type, 

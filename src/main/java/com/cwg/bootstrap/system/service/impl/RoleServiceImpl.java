@@ -20,7 +20,7 @@ public class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
-	public int remove(int roleId) {
+	public int remove(Integer roleId) {
 		return roleMapper.deleteByPrimaryKey(roleId);
 	}
 
@@ -35,7 +35,7 @@ public class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
-	public Role getById(int roleId) {
+	public Role getById(Integer roleId) {
 		return roleMapper.selectByPrimaryKey(roleId);
 	}
 

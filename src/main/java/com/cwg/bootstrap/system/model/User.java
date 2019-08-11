@@ -1,7 +1,7 @@
 package com.cwg.bootstrap.system.model;
 
 public class User {
-    private Long userId;
+    private Integer userId;
 
     private String userName;
 
@@ -13,11 +13,11 @@ public class User {
 
     private Boolean isAdmin;
 
-    public Long getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 

@@ -22,25 +22,26 @@ public class ResourceServiceImpl implements IResourceService {
 	}
 
 	@Override
-	public int save(Resource resource) {
+	public int update(Resource resource) {
 		return resourceMapper.updateByPrimaryKeySelective(resource);
 	}
 
 	@Override
-	public int remove(Long resourceId) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int remove(Integer resourceId) throws Exception {
+		if (resourceMapper.selectChildrenCount(resourceId)>0) {
+			throw new Exception("存在子节点不允许删除");
+		}
+		return resourceMapper.deleteByPrimaryKey(resourceId);
 	}
 
 	@Override
 	public List<Resource> getTreeList() {
-		// TODO Auto-generated method stub
 		List<Resource> resources = resourceMapper.selectList();
-		return buildTree(resources, 0L);
+		return buildTree(resources, 0);
 	}
 	
 	// 构造资源树
-	private List<Resource> buildTree(List<Resource> sourceData, Long parentId) {
+	private List<Resource> buildTree(List<Resource> sourceData, Integer parentId) {
 		List<Resource> result = new ArrayList<>();
 		for (Resource resource : sourceData) {
 			if(resource.getResourceParent().equals(parentId)) {

@@ -1,5 +1,7 @@
 package com.cwg.bootstrap.system.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.druid.support.logging.Resources;
 import com.cwg.bootstrap.system.model.Resource;
 import com.cwg.bootstrap.system.service.IResourceService;
 import com.cwg.bootstrap.web.BaseController;
@@ -40,11 +43,17 @@ public class ResourceController extends BaseController {
 		if(bindingResult.hasErrors()) {
 			return fail(bindingResult.getFieldError().getDefaultMessage());
 		}
-		int row = resourceService.save(resource);
+		int row = resourceService.update(resource);
 		if(row > 0) {
 			return success(row);
 		}else {
 			return fail("没有添加成功");
 		}
+	}
+	
+	@GetMapping("/tree")
+	public JsonResult getTree() {
+		List<Resource> resources = resourceService.getTreeList();
+		return success(resources);
 	}
 }

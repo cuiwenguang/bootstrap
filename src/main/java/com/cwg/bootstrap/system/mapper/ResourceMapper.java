@@ -18,4 +18,6 @@ public interface ResourceMapper {
     int updateByPrimaryKey(Resource record);
     
     List<Resource> selectList();
+    
+    int selectChildrenCount(Integer resourceId);
 }

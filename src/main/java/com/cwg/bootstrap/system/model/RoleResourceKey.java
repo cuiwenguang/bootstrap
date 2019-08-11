@@ -1,23 +1,23 @@
 package com.cwg.bootstrap.system.model;
 
 public class RoleResourceKey {
-    private Long resourceId;
+    private Integer resourceId;
 
-    private Long roleId;
+    private Integer roleId;
 
-    public Long getResourceId() {
+    public Integer getResourceId() {
         return resourceId;
     }
 
-    public void setResourceId(Long resourceId) {
+    public void setResourceId(Integer resourceId) {
         this.resourceId = resourceId;
     }
 
-    public Long getRoleId() {
+    public Integer getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Long roleId) {
+    public void setRoleId(Integer roleId) {
         this.roleId = roleId;
     }
 }

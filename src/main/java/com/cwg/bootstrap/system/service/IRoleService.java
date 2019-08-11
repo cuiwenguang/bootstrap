@@ -6,8 +6,8 @@ import com.cwg.bootstrap.system.model.Role;
 
 public interface IRoleService {
 	public int add(Role role);
-	public int remove(int roleId);
+	public int remove(Integer roleId);
 	public int update(Role role);
 	public List<Role> getList(Role role);
-	public Role getById(int roleId);
+	public Role getById(Integer roleId);
 }

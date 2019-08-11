@@ -9,7 +9,7 @@ import com.cwg.bootstrap.system.model.Resource;
 
 public interface IResourceService {
 	public int add(Resource resource);
-	public int save(Resource resource);
-	public int remove(Long resourceId);
+	public int update(Resource resource);
+	public int remove(Integer resourceId) throws Exception;
 	public List<Resource> getTreeList();
 }

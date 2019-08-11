@@ -8,7 +8,7 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
 public class Resource {
-    private Long resourceId;
+    private Integer resourceId;
     
     @NotBlank(message = "资源名称不能为空")
     @Length(min = 2, max = 20, message = "名称长度在{min}~{max}之间" )
@@ -22,7 +22,7 @@ public class Resource {
 
     private String resourcePath;
 
-    private Long resourceParent;
+    private Integer resourceParent;
     
     private List<Resource> children;
 
@@ -34,11 +34,11 @@ public class Resource {
 		this.children = children;
 	}
 
-	public Long getResourceId() {
+	public Integer getResourceId() {
         return resourceId;
     }
 
-    public void setResourceId(Long resourceId) {
+    public void setResourceId(Integer resourceId) {
         this.resourceId = resourceId;
     }
 
@@ -74,11 +74,11 @@ public class Resource {
         this.resourcePath = resourcePath == null ? null : resourcePath.trim();
     }
 
-    public Long getResourceParent() {
+    public Integer getResourceParent() {
         return resourceParent;
     }
 
-    public void setResourceParent(Long resourceParent) {
+    public void setResourceParent(Integer resourceParent) {
         this.resourceParent = resourceParent;
     }
 }
