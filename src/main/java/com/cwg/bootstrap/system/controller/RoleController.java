@@ -1,6 +1,7 @@
 package com.cwg.bootstrap.system.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -64,4 +65,17 @@ public class RoleController extends BaseController {
 		List<Role> roles = roleService.getList(new Role());
 		return success(roles);
 	}
+	
+	@PostMapping("/assign/{id}")
+	public JsonResult assignResource(@PathVariable("id")Integer id, 
+			         				 @RequestBody Map<String, List<Integer>> map) {
+		System.out.println(map);
+		int rows = roleService.assign(id, map.get("resourceIds"));
+		if(rows > 0) {
+			return success("ok");
+		}else {
+			return fail("发生错误");
+		}
+	}
+	
 }
