@@ -59,6 +59,9 @@
             <!-- 针对 oracle 数据库的一个配置，是否把 schema 作为字包名 -->
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
-        <table tableName="*"></table>
+        <table tableName="sys_role_resource"  
+            domainObjectName="RoleResourceKey" enableCountByExample="false"  
+            enableDeleteByExample="false" enableSelectByExample="false"  
+            enableUpdateByExample="false" /> 
     </context>
 </generatorConfiguration>

@@ -11,9 +11,6 @@ public class BaseController {
 	@Autowired
 	private HttpServletRequest request;
 	
-	@Autowired
-	private HttpServletResponse response;
-	
 	public JsonResult success(Object data) {
 		JsonResult result = new JsonResult();
 		result.setCode(200);
@@ -31,6 +28,13 @@ public class BaseController {
 	public JsonResult fail(String msg) {
 		JsonResult result = new JsonResult();
 		result.setCode(410);
+		result.setMsg(msg);
+		return result;
+	}
+	
+	public JsonResult erro(String msg) {
+		JsonResult result = new JsonResult();
+		result.setCode(500);
 		result.setMsg(msg);
 		return result;
 	}
