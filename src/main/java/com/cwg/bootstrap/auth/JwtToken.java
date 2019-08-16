@@ -6,6 +6,13 @@ public class JwtToken implements AuthenticationToken {
 	private static final long serialVersionUID = 1L;	
 	private String token;
 	
+	
+	public JwtToken() {}
+	
+	public JwtToken(String token2) {
+		this.token = token2;
+	}
+
 	@Override
 	public Object getPrincipal() {
 		return token;

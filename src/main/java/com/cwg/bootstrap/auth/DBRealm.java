@@ -1,7 +1,6 @@
 package com.cwg.bootstrap.auth;
 
 import java.util.HashSet;
-import java.util.List;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
