@@ -15,7 +15,7 @@ public class ResourceServiceImpl implements IResourceService {
 
 	@Autowired
 	ResourceMapper resourceMapper;
-	
+
 	@Override
 	public int add(Resource resource) {
 		return resourceMapper.insert(resource);
@@ -28,7 +28,7 @@ public class ResourceServiceImpl implements IResourceService {
 
 	@Override
 	public int remove(Integer resourceId) throws Exception {
-		if (resourceMapper.selectChildrenCount(resourceId)>0) {
+		if (resourceMapper.selectChildrenCount(resourceId) > 0) {
 			throw new Exception("存在子节点不允许删除");
 		}
 		return resourceMapper.deleteByPrimaryKey(resourceId);
@@ -39,18 +39,17 @@ public class ResourceServiceImpl implements IResourceService {
 		List<Resource> resources = resourceMapper.selectList();
 		return buildTree(resources, 0);
 	}
-	
-	// 构造资源树
+
+	// 构造指标树
 	private List<Resource> buildTree(List<Resource> sourceData, Integer parentId) {
 		List<Resource> result = new ArrayList<>();
 		for (Resource resource : sourceData) {
-			if(resource.getResourceParent().equals(parentId)) {
+			if (resource.getResourceParent().equals(parentId)) {
 				resource.setChildren(buildTree(sourceData, resource.getResourceId()));
 				result.add(resource);
 			}
 		}
 		return result;
 	}
-	
 
 }

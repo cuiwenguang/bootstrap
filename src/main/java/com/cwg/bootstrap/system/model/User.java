@@ -1,5 +1,7 @@
 package com.cwg.bootstrap.system.model;
 
+import java.util.List;
+
 public class User {
     private Integer userId;
 
@@ -12,6 +14,8 @@ public class User {
     private String salt;
 
     private Boolean isAdmin;
+    
+    private List<Role> roles; 
 
     public Integer getUserId() {
         return userId;
@@ -60,4 +64,12 @@ public class User {
     public void setIsAdmin(Boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
 }

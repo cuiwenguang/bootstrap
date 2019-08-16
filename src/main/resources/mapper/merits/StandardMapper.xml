@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cwg.bootstrap.merits.mapper.StandardMapper" >
+  <resultMap id="BaseResultMap" type="com.cwg.bootstrap.merits.model.Standard" >
+    <id column="standard_id" property="standardId" jdbcType="INTEGER" />
+    <result column="standard_name" property="standardName" jdbcType="VARCHAR" />
+    <result column="standard_desc" property="standardDesc" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="standard_type" property="standardType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    standard_id, standard_name, standard_desc, parent_id, standard_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from merits_standard
+    where standard_id = #{standardId,jdbcType=INTEGER}
+  </select>
+  <select id="selectList" resultMap="BaseResultMap">
+	select 
+    <include refid="Base_Column_List" />
+    from merits_standard  
+  </select>
+  <select id="selectListByParentId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+	select 
+    <include refid="Base_Column_List" />
+    from merits_standard
+    where parent_id = #{parentId}  
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from merits_standard
+    where standard_id = #{standardId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cwg.bootstrap.merits.model.Standard" >
+    insert into merits_standard (standard_id, standard_name, standard_desc, 
+      parent_id, standard_type)
+    values (#{standardId,jdbcType=INTEGER}, #{standardName,jdbcType=VARCHAR}, #{standardDesc,jdbcType=VARCHAR}, 
+      #{parentId,jdbcType=INTEGER}, #{standardType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cwg.bootstrap.merits.model.Standard" >
+    insert into merits_standard
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="standardId != null" >
+        standard_id,
+      </if>
+      <if test="standardName != null" >
+        standard_name,
+      </if>
+      <if test="standardDesc != null" >
+        standard_desc,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="standardType != null" >
+        standard_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="standardId != null" >
+        #{standardId,jdbcType=INTEGER},
+      </if>
+      <if test="standardName != null" >
+        #{standardName,jdbcType=VARCHAR},
+      </if>
+      <if test="standardDesc != null" >
+        #{standardDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="standardType != null" >
+        #{standardType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cwg.bootstrap.merits.model.Standard" >
+    update merits_standard
+    <set >
+      <if test="standardName != null" >
+        standard_name = #{standardName,jdbcType=VARCHAR},
+      </if>
+      <if test="standardDesc != null" >
+        standard_desc = #{standardDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="standardType != null" >
+        standard_type = #{standardType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where standard_id = #{standardId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cwg.bootstrap.merits.model.Standard" >
+    update merits_standard
+    set standard_name = #{standardName,jdbcType=VARCHAR},
+      standard_desc = #{standardDesc,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      standard_type = #{standardType,jdbcType=VARCHAR}
+    where standard_id = #{standardId,jdbcType=INTEGER}
+  </update>
+</mapper>

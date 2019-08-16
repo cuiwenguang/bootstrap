@@ -1,3 +1,7 @@
+/**
+ * https://www.jianshu.com/p/0b1131be7ace 参考
+ */
+
 package com.cwg.bootstrap.config;
 
 import org.apache.shiro.mgt.SecurityManager;
