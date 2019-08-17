@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cwg.bootstrap.auth.JwtUtil;
+import com.cwg.bootstrap.system.auth.JwtUtil;
 import com.cwg.bootstrap.system.model.User;
 
 @RestController

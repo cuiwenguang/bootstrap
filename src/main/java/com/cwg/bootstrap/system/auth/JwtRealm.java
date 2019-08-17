@@ -1,4 +1,4 @@
-package com.cwg.bootstrap.auth;
+package com.cwg.bootstrap.system.auth;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -17,7 +17,6 @@ public class JwtRealm extends AuthorizingRealm  {
 
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

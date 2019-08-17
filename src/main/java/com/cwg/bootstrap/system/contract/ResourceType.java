@@ -1,7 +1,7 @@
 /**
  * 系统资源类型
  */
-package com.cwg.bootstrap.enums;
+package com.cwg.bootstrap.system.contract;
 
 public class ResourceType {
 	/** 目录*/

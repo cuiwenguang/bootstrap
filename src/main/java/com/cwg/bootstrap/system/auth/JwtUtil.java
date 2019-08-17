@@ -1,4 +1,4 @@
-package com.cwg.bootstrap.auth;
+package com.cwg.bootstrap.system.auth;
 
 import java.util.Date;
 

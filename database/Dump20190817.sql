@@ -16,6 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `sys_dept`
+--
+
+DROP TABLE IF EXISTS `sys_dept`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_dept` (
+  `dept_id` int(11) NOT NULL AUTO_INCREMENT,
+  `dept_name` varchar(20) NOT NULL,
+  `parent_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`dept_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_dept`
+--
+
+LOCK TABLES `sys_dept` WRITE;
+/*!40000 ALTER TABLE `sys_dept` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sys_dept` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `sys_resource`
 --
 
@@ -23,14 +47,13 @@ DROP TABLE IF EXISTS `sys_resource`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sys_resource` (
-  `resource_id` int(11) NOT NULL AUTO_INCREMENT,
+  `resource_id` int(11) NOT NULL,
   `resource_name` varchar(20) NOT NULL,
   `resource_type` char(2) NOT NULL,
   `resource_code` varchar(45) NOT NULL,
-  `resource_path` varchar(45) NOT NULL,
-  `resource_parent` int(11) DEFAULT NULL,
-  PRIMARY KEY (`resource_id`),
-  UNIQUE KEY `resource_id_UNIQUE` (`resource_id`)
+  `resource_path` varchar(45) DEFAULT '#',
+  `resource_parent` int(11) DEFAULT '0',
+  PRIMARY KEY (`resource_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -40,6 +63,7 @@ CREATE TABLE `sys_resource` (
 
 LOCK TABLES `sys_resource` WRITE;
 /*!40000 ALTER TABLE `sys_resource` DISABLE KEYS */;
+INSERT INTO `sys_resource` VALUES (1,'系统管理','F','system.resource','#',0),(2,'用户管理','M','system.resource','/sys/user/',1);
 /*!40000 ALTER TABLE `sys_resource` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -51,12 +75,10 @@ DROP TABLE IF EXISTS `sys_role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sys_role` (
-  `role_id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_id` int(11) NOT NULL,
   `role_name` varchar(20) NOT NULL,
-  PRIMARY KEY (`role_id`),
-  UNIQUE KEY `role_id_UNIQUE` (`role_id`),
-  UNIQUE KEY `role_name_UNIQUE` (`role_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +87,7 @@ CREATE TABLE `sys_role` (
 
 LOCK TABLES `sys_role` WRITE;
 /*!40000 ALTER TABLE `sys_role` DISABLE KEYS */;
-INSERT INTO `sys_role` VALUES (2,'普通用户2'),(1,'管理员');
+INSERT INTO `sys_role` VALUES (1,'管理员'),(2,'普通用户2');
 /*!40000 ALTER TABLE `sys_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -79,10 +101,7 @@ DROP TABLE IF EXISTS `sys_role_resource`;
 CREATE TABLE `sys_role_resource` (
   `resource_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
-  PRIMARY KEY (`resource_id`,`role_id`),
-  KEY `fk_role_id_idx` (`role_id`),
-  CONSTRAINT `fk_resource_id` FOREIGN KEY (`resource_id`) REFERENCES `sys_resource` (`resource_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_role_id` FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`role_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`resource_id`,`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -107,8 +126,9 @@ CREATE TABLE `sys_user` (
   `user_name` varchar(20) NOT NULL,
   `password` varchar(20) NOT NULL,
   `email` varchar(20) NOT NULL,
-  `salt` varchar(10) DEFAULT NULL,
-  `is_admin` bit(1) DEFAULT NULL,
+  `salt` varchar(10) DEFAULT '',
+  `is_admin` bit(1) DEFAULT b'0',
+  `is_active` bit(1) DEFAULT b'0',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `user_id_UNIQUE` (`user_id`),
   UNIQUE KEY `user_name_UNIQUE` (`user_name`),
@@ -135,12 +155,8 @@ DROP TABLE IF EXISTS `sys_user_role`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sys_user_role` (
   `user_id` int(11) NOT NULL,
-  `role_id` int(11) NOT NULL,
-  PRIMARY KEY (`user_id`,`role_id`),
-  KEY `fk_sys_user_has_sys_role_sys_role1_idx` (`role_id`),
-  KEY `fk_sys_user_has_sys_role_sys_user_idx` (`user_id`),
-  CONSTRAINT `fk_sys_user_has_sys_role_sys_role1` FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`role_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_sys_user_has_sys_role_sys_user` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `role_id` varchar(45) NOT NULL,
+  PRIMARY KEY (`user_id`,`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -166,4 +182,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-10 18:10:12
+-- Dump completed on 2019-08-17 12:28:55
