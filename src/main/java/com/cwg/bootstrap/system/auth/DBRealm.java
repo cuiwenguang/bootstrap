@@ -32,6 +32,11 @@ public class DBRealm extends AuthorizingRealm {
         simpleAuthorizationInfo.addRoles(roles);
         return simpleAuthorizationInfo;
 	}
+	
+	@Override
+	public boolean supports(AuthenticationToken token) {
+		return token instanceof UsernamePasswordToken;
+	}
 
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
@@ -42,7 +47,7 @@ public class DBRealm extends AuthorizingRealm {
 			throw new AuthenticationException("错误的用户名或密码");
 		}
 		return new SimpleAuthenticationInfo(user, user.getPassword(),
-				ByteSource.Util.bytes(user.getSalt()), getName());
+				ByteSource.Util.bytes(user.getSalt()), "dbRealm");
 	}
 	
  

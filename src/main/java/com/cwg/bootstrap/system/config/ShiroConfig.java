@@ -11,6 +11,7 @@ import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 
 import org.apache.shiro.authc.Authenticator;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authc.pam.FirstSuccessfulStrategy;
 import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
 import org.apache.shiro.mgt.SecurityManager;
@@ -19,6 +20,7 @@ import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
+import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.mgt.DefaultWebSessionStorageEvaluator;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -30,7 +32,17 @@ import com.cwg.bootstrap.system.auth.DBRealm;
 
 @Configuration
 public class ShiroConfig {
-    /**
+    
+	@Bean
+	public SecurityManager securityManager() {
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+        securityManager.setAuthenticator(authenticator());
+        // securityManager.setRealms(Arrays.asList(jwtShiroRealm(), dbShiroRealm()));
+        return securityManager;
+	}
+	
+	
+	/**
      * 注册shiro的Filter，拦截请求
      */ 
     @Bean
@@ -45,9 +57,9 @@ public class ShiroConfig {
         return filterRegistration;
     }
 
-    /**
-     * 初始化Authenticator
-     */
+	  /**
+	     * 初始化Authenticator
+	     */
     @Bean
     public Authenticator authenticator() {
         ModularRealmAuthenticator authenticator = new ModularRealmAuthenticator();
@@ -74,6 +86,8 @@ public class ShiroConfig {
     @Bean("dbRealm")
     public Realm dbShiroRealm() {
         DBRealm myShiroRealm = new DBRealm();
+        myShiroRealm.setAuthenticationCachingEnabled(false);
+        myShiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         return myShiroRealm;
     }
     /**
@@ -93,33 +107,50 @@ public class ShiroConfig {
         ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
         factoryBean.setSecurityManager(securityManager);
         Map<String, Filter> filterMap = factoryBean.getFilters();
-        filterMap.put("authcToken", createAuthFilter());
+        //filterMap.put("authcToken", createAuthFilter());
         //filterMap.put("anyRole", createRolesFilter());
         factoryBean.setFilters(filterMap);
         factoryBean.setFilterChainDefinitionMap(shiroFilterChainDefinition().getFilterChainMap());
 
         return factoryBean;
     }
-
+    
     @Bean
     protected ShiroFilterChainDefinition shiroFilterChainDefinition() {
         DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
+        chainDefinition.addPathDefinition("/**", "anon");
         chainDefinition.addPathDefinition("/login", "noSessionCreation,anon");  //login不做认证，noSessionCreation的作用是用户在操作session时会抛异常
-        chainDefinition.addPathDefinition("/logout", "noSessionCreation,authcToken[permissive]"); //做用户认证，permissive参数的作用是当token无效时也允许请求访问，不会返回鉴权未通过的错误
-        chainDefinition.addPathDefinition("/image/**", "anon");
+        //chainDefinition.addPathDefinition("/logout", "noSessionCreation,authcToken[permissive]"); //做用户认证，permissive参数的作用是当token无效时也允许请求访问，不会返回鉴权未通过的错误
+        //chainDefinition.addPathDefinition("/image/**", "anon");
         // chainDefinition.addPathDefinition("/admin/**", "noSessionCreation,authcToken,anyRole[admin,manager]"); //只允许admin或manager角色的用户访问
-        chainDefinition.addPathDefinition("/article/list", "noSessionCreation,authcToken");
+        //chainDefinition.addPathDefinition("/article/list", "noSessionCreation,authcToken");
         // chainDefinition.addPathDefinition("/article/*", "noSessionCreation,authcToken[permissive]");
-        chainDefinition.addPathDefinition("/**", "noSessionCreation,authcToken"); // 默认进行用户鉴权
+        //chainDefinition.addPathDefinition("/**", "noSessionCreation,authcToken"); // 默认进行用户鉴权
         return chainDefinition;
     }
     //注意不要加@Bean注解，不然spring会自动注册成filter
     protected JwtAuthFilter createAuthFilter(){
         return new JwtAuthFilter();
     }
-    //注意不要加@Bean注解，不然spring会自动注册成filter 
+    // 注意不要加@Bean注解，不然spring会自动注册成filter 
 //    protected AnyRolesAuthorizationFilter createRolesFilter(){
 //        return new AnyRolesAuthorizationFilter();
 //    }
+    /**
+	     * 密码校验规则HashedCredentialsMatcher
+	     * 这个类是为了对密码进行编码的 ,
+	     * 防止密码在数据库里明码保存 , 当然在登陆认证的时候 ,
+	     * 这个类也负责对form里输入的密码进行编码
+	     * 处理认证匹配处理器：如果自定义需要实现继承HashedCredentialsMatcher
+	 */
+	protected HashedCredentialsMatcher hashedCredentialsMatcher() {
+	    HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
+	    //指定加密方式为MD5
+	    credentialsMatcher.setHashAlgorithmName("MD5");
+	    //加密次数
+	    credentialsMatcher.setHashIterations(2);
+	    credentialsMatcher.setStoredCredentialsHexEncoded(true);
+	    return credentialsMatcher;
+	}
 
 }

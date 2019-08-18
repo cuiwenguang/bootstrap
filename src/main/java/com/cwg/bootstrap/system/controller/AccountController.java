@@ -14,14 +14,18 @@ import com.cwg.bootstrap.system.model.User;
 
 @RestController
 @RequestMapping("/")
-public class AuthController {
+public class AccountController {
 	
 	@PostMapping("/login")
 	public String login(@RequestBody User user) {
 		Subject subject = SecurityUtils.getSubject();
 		UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), user.getPassword());
-		subject.login(token);
-		return JwtUtil.sign(user.getUserName(), user.getPassword());
+		try {
+			subject.login(token);
+			return JwtUtil.sign(user.getUserName(), user.getPassword());
+		}catch (Exception e) {
+			return "";
+		}
 	}
 	
 	@GetMapping("/logout")
