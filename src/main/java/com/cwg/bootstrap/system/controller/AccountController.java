@@ -12,24 +12,29 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cwg.bootstrap.system.auth.JwtUtil;
 import com.cwg.bootstrap.system.model.User;
 import com.cwg.bootstrap.system.utils.ShiroUtils;
+import com.cwg.bootstrap.web.BaseController;
+import com.cwg.bootstrap.web.JsonResult;
 
 @RestController
 @RequestMapping("/")
-public class AccountController {
+public class AccountController extends BaseController {
 	
 	@PostMapping("/login")
-	public String login(@RequestBody User user) {
+	public JsonResult login(@RequestBody User user) {
 		Subject subject = SecurityUtils.getSubject();
 		UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), user.getPassword());
 		try {
 			subject.login(token);
-			return JwtUtil.sign(user.getUserName(), ShiroUtils.getSalt());
+			String tokenString = JwtUtil.sign(user.getUserName(), ShiroUtils.getSalt());
+			return success(tokenString);
 		}catch (Exception e) {
-			return "";
+			return fail("验证失败");
 		}
 	}
 	
 	@GetMapping("/logout")
-	public void logout() {
+	public JsonResult logout() {
+		SecurityUtils.getSubject().logout();
+		return success("注销完成");
 	}
 }
