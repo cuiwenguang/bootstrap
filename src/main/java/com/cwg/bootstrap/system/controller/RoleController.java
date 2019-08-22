@@ -69,7 +69,6 @@ public class RoleController extends BaseController {
 	@PostMapping("/assign/{id}")
 	public JsonResult assignResource(@PathVariable("id")Integer id, 
 			         				 @RequestBody Map<String, List<Integer>> map) {
-		System.out.println(map);
 		int rows = roleService.assign(id, map.get("resourceIds"));
 		if(rows > 0) {
 			return success("ok");

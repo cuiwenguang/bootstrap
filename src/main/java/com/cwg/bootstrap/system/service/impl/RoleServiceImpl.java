@@ -1,6 +1,5 @@
 package com.cwg.bootstrap.system.service.impl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.cwg.bootstrap.system.mapper.RoleMapper;
 import com.cwg.bootstrap.system.model.Role;
-import com.cwg.bootstrap.system.model.RoleResourceKey;
 import com.cwg.bootstrap.system.service.IRoleService;
 
 @Service
