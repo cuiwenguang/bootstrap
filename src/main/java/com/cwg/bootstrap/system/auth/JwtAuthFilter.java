@@ -41,7 +41,7 @@ public class JwtAuthFilter extends AuthenticatingFilter {
      */
 	@Override
 	protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) throws Exception {
-		String token = ((HttpServletRequest)request).getHeader("Authentication");
+		String token = ((HttpServletRequest)request).getHeader("Authorization");
 		if(!StringUtils.isEmpty(token)){
 			return new JwtToken(token);
 		}
@@ -56,7 +56,7 @@ public class JwtAuthFilter extends AuthenticatingFilter {
 		HttpServletResponse httpResponse = WebUtils.toHttp(response);
 		httpResponse.setCharacterEncoding("UTF-8");
 		httpResponse.setContentType("application/json;charset=UTF-8");
-		httpResponse.setStatus(HttpStatus.NON_AUTHORITATIVE_INFORMATION.value());
+		httpResponse.setStatus(HttpStatus.BAD_REQUEST.value());
 		return false;
 	}
 }

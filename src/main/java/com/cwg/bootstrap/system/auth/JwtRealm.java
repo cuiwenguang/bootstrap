@@ -18,9 +18,6 @@ public class JwtRealm extends AuthorizingRealm  {
 	@Autowired
 	UserMapper userMapper;
 	
-	public JwtRealm() {
-		this.setCredentialsMatcher(new JwtCredentialsMatcher());
-	}
 	
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
@@ -40,7 +37,7 @@ public class JwtRealm extends AuthorizingRealm  {
 		if(user == null) {
 			throw new AuthenticationException("token 过期，重新登录");
 		}
-		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user.getUserName(),
+		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user,
 				user.getSalt(), "jwtRealm");
 		return authenticationInfo;
 	}

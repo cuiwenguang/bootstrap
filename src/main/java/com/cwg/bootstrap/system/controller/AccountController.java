@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cwg.bootstrap.system.auth.JwtUtil;
 import com.cwg.bootstrap.system.model.User;
+import com.cwg.bootstrap.system.utils.ShiroUtils;
 
 @RestController
 @RequestMapping("/")
@@ -22,7 +23,7 @@ public class AccountController {
 		UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), user.getPassword());
 		try {
 			subject.login(token);
-			return JwtUtil.sign(user.getUserName(), user.getPassword());
+			return JwtUtil.sign(user.getUserName(), ShiroUtils.getSalt());
 		}catch (Exception e) {
 			return "";
 		}

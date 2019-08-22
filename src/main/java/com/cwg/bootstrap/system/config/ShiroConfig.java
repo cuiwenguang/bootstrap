@@ -27,6 +27,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.cwg.bootstrap.system.auth.JwtAuthFilter;
+import com.cwg.bootstrap.system.auth.JwtCredentialsMatcher;
 import com.cwg.bootstrap.system.auth.JwtRealm;
 import com.cwg.bootstrap.system.auth.DBRealm;
 
@@ -60,8 +61,8 @@ public class ShiroConfig {
 	  /**
 	     * 初始化Authenticator
 	     */
-    @Bean
-    public Authenticator authenticator() {
+    
+    protected Authenticator authenticator() {
         ModularRealmAuthenticator authenticator = new ModularRealmAuthenticator();
         //设置两个Realm，一个用于用户登录验证和访问权限获取；一个用于jwt token的认证
         authenticator.setRealms(Arrays.asList(jwtShiroRealm(), dbShiroRealm()));
@@ -96,6 +97,7 @@ public class ShiroConfig {
     @Bean("jwtRealm")
     public Realm jwtShiroRealm() {
     	JwtRealm jwtRealm = new JwtRealm();
+    	jwtRealm.setCredentialsMatcher(new JwtCredentialsMatcher());
         return jwtRealm;
     }
 
@@ -107,7 +109,7 @@ public class ShiroConfig {
         ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
         factoryBean.setSecurityManager(securityManager);
         Map<String, Filter> filterMap = factoryBean.getFilters();
-        //filterMap.put("authcToken", createAuthFilter());
+        filterMap.put("authcToken", createAuthFilter());
         //filterMap.put("anyRole", createRolesFilter());
         factoryBean.setFilters(filterMap);
         factoryBean.setFilterChainDefinitionMap(shiroFilterChainDefinition().getFilterChainMap());
@@ -118,14 +120,11 @@ public class ShiroConfig {
     @Bean
     protected ShiroFilterChainDefinition shiroFilterChainDefinition() {
         DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
-        chainDefinition.addPathDefinition("/**", "anon");
+        // chainDefinition.addPathDefinition("/**", "anon");
         chainDefinition.addPathDefinition("/login", "noSessionCreation,anon");  //login不做认证，noSessionCreation的作用是用户在操作session时会抛异常
-        //chainDefinition.addPathDefinition("/logout", "noSessionCreation,authcToken[permissive]"); //做用户认证，permissive参数的作用是当token无效时也允许请求访问，不会返回鉴权未通过的错误
-        //chainDefinition.addPathDefinition("/image/**", "anon");
-        // chainDefinition.addPathDefinition("/admin/**", "noSessionCreation,authcToken,anyRole[admin,manager]"); //只允许admin或manager角色的用户访问
-        //chainDefinition.addPathDefinition("/article/list", "noSessionCreation,authcToken");
-        // chainDefinition.addPathDefinition("/article/*", "noSessionCreation,authcToken[permissive]");
-        //chainDefinition.addPathDefinition("/**", "noSessionCreation,authcToken"); // 默认进行用户鉴权
+        chainDefinition.addPathDefinition("/logout", "noSessionCreation,authcToken[permissive]"); //做用户认证，permissive参数的作用是当token无效时也允许请求访问，不会返回鉴权未通过的错误
+        chainDefinition.addPathDefinition("/static/**", "anon");
+        chainDefinition.addPathDefinition("/**", "noSessionCreation,authcToken"); // 默认进行用户鉴权
         return chainDefinition;
     }
     //注意不要加@Bean注解，不然spring会自动注册成filter
