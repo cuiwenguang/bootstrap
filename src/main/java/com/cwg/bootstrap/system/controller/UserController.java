@@ -1,7 +1,5 @@
 package com.cwg.bootstrap.system.controller;
 
-import java.util.Random;
-
 import javax.validation.Valid;
 
 import org.apache.shiro.SecurityUtils;
