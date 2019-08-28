@@ -35,12 +35,12 @@ public class StandardService implements IStandardService {
 	
 	@Override
 	public List<Standard> getListByParentId(Integer parentId) {
-		return standardMapper.selecListByParentId(parentId);
+		return standardMapper.selectListByParentId(parentId);
 	}
 	
 	@Override
 	public List<Standard> getTreeList() {
-		List<Standard> list = standardMapper.selecList();
+		List<Standard> list = standardMapper.selectList();
 		return buildTree(list, 0);
 	}
 

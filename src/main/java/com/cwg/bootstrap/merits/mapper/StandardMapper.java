@@ -17,7 +17,7 @@ public interface StandardMapper {
 
     int updateByPrimaryKey(Standard record);
     
-    List<Standard> selecList();
+    List<Standard> selectList();
     
-    List<Standard> selecListByParentId(Integer parentId);
+    List<Standard> selectListByParentId(Integer parentId);
 }

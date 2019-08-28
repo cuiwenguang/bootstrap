@@ -127,7 +127,7 @@ public class ShiroConfig {
         chainDefinition.addPathDefinition("/**", "noSessionCreation,authcToken"); // 默认进行用户鉴权
         return chainDefinition;
     }
-    //注意不要加@Bean注解，不然spring会自动注册成filter
+
     protected JwtAuthFilter createAuthFilter(){
         return new JwtAuthFilter();
     }
@@ -135,6 +135,7 @@ public class ShiroConfig {
 //    protected AnyRolesAuthorizationFilter createRolesFilter(){
 //        return new AnyRolesAuthorizationFilter();
 //    }
+
     /**
 	     * 密码校验规则HashedCredentialsMatcher
 	     * 这个类是为了对密码进行编码的 ,
