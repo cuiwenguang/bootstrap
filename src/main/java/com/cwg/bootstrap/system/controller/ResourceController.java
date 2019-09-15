@@ -33,7 +33,7 @@ public class ResourceController extends BaseController {
 		if(row > 0) {
 			return success(row);
 		}else {
-			return fail("没有添加成功");
+			return fail();
 		}
 	}
 	
@@ -46,7 +46,7 @@ public class ResourceController extends BaseController {
 		if(row > 0) {
 			return success(row);
 		}else {
-			return fail("没有添加成功");
+			return fail();
 		}
 	}
 	

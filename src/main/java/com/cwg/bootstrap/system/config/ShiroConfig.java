@@ -131,7 +131,7 @@ public class ShiroConfig {
     protected JwtAuthFilter createAuthFilter(){
         return new JwtAuthFilter();
     }
-    // 注意不要加@Bean注解，不然spring会自动注册成filter 
+    // 任意一个角色验证通过，则通过验证
 //    protected AnyRolesAuthorizationFilter createRolesFilter(){
 //        return new AnyRolesAuthorizationFilter();
 //    }

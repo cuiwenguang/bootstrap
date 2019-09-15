@@ -35,6 +35,6 @@ public class AccountController extends BaseController {
 	@GetMapping("/logout")
 	public JsonResult logout() {
 		SecurityUtils.getSubject().logout();
-		return success("注销完成");
+		return success();
 	}
 }

@@ -30,7 +30,7 @@ public class RoleController extends BaseController {
 		if (row>0) {
 			return success(row);
 		}else {
-			return fail("更新失败");
+			return fail();
 		}
 	}
 	
@@ -40,7 +40,7 @@ public class RoleController extends BaseController {
 		if (row>0) {
 			return success(row);
 		}else {
-			return fail("添加失败");
+			return fail();
 		}
 	}
 	
@@ -50,7 +50,7 @@ public class RoleController extends BaseController {
 		if (row>0) {
 			return success(row);
 		}else {
-			return fail("删除失败");
+			return fail();
 		}
 	}
 	
@@ -71,9 +71,9 @@ public class RoleController extends BaseController {
 			         				 @RequestBody Map<String, List<Integer>> map) {
 		int rows = roleService.assign(id, map.get("resourceIds"));
 		if(rows > 0) {
-			return success("ok");
+			return success();
 		}else {
-			return fail("发生错误");
+			return fail();
 		}
 	}
 	

@@ -10,17 +10,36 @@ public class BaseController {
 	@Autowired
 	private HttpServletRequest request;
 	
+	public JsonResult success() {
+		JsonResult result = new JsonResult();
+		result.setCode(HttpStatus.SUCCESS);
+		return result;
+	}
+	
+	public JsonResult success(String msg) {
+		JsonResult result = new JsonResult();
+		result.setMsg(msg);
+		return result;
+	}
+	
 	public JsonResult success(Object data) {
 		JsonResult result = new JsonResult();
 		result.setCode(HttpStatus.SUCCESS);
 		result.setData(data);
 		return result;
 	}
+	
 	public JsonResult success(Object data,String msg) {
 		JsonResult result = new JsonResult();
 		result.setCode(HttpStatus.SUCCESS);
 		result.setData(data);
 		result.setMsg(msg);
+		return result;
+	}
+	
+	public JsonResult fail() {
+		JsonResult result = new JsonResult();
+		result.setMsg("request failed");
 		return result;
 	}
 	
@@ -31,7 +50,7 @@ public class BaseController {
 		return result;
 	}
 	
-	public JsonResult erro(String msg) {
+	public JsonResult error(String msg) {
 		JsonResult result = new JsonResult();
 		result.setCode(HttpStatus.ERROR);
 		result.setMsg(msg);

@@ -30,9 +30,9 @@ public class UserController extends BaseController {
 			return fail(bindingResult.getFieldError().getDefaultMessage());
 		}
 		if(userService.create(user)) {
-			return success("success");
+			return success();
 		}else {
-			return fail("fail");
+			return fail();
 		}
 	}
 	
