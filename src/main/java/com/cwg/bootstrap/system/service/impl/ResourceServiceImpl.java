@@ -40,7 +40,7 @@ public class ResourceServiceImpl implements IResourceService {
 		return buildTree(resources, 0);
 	}
 
-	// 构造指标树
+	// 构造资源树
 	private List<Resource> buildTree(List<Resource> sourceData, Integer parentId) {
 		List<Resource> result = new ArrayList<>();
 		for (Resource resource : sourceData) {
