@@ -120,11 +120,11 @@ public class ShiroConfig {
     @Bean
     protected ShiroFilterChainDefinition shiroFilterChainDefinition() {
         DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
-        // chainDefinition.addPathDefinition("/**", "anon");
-        chainDefinition.addPathDefinition("/login", "noSessionCreation,anon");  //login不做认证，noSessionCreation的作用是用户在操作session时会抛异常
-        chainDefinition.addPathDefinition("/logout", "noSessionCreation,authcToken[permissive]"); //做用户认证，permissive参数的作用是当token无效时也允许请求访问，不会返回鉴权未通过的错误
+        chainDefinition.addPathDefinition("/**", "anon");
+        chainDefinition.addPathDefinition("/login", "anon");  //login不做认证，noSessionCreation的作用是用户在操作session时会抛异常
+        chainDefinition.addPathDefinition("/logout", "authcToken[permissive]"); //做用户认证，permissive参数的作用是当token无效时也允许请求访问，不会返回鉴权未通过的错误
         chainDefinition.addPathDefinition("/static/**", "anon");
-        chainDefinition.addPathDefinition("/**", "noSessionCreation,authcToken"); // 默认进行用户鉴权
+        //chainDefinition.addPathDefinition("/**", "authcToken"); // 默认进行用户鉴权
         return chainDefinition;
     }
 

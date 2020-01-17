@@ -13,4 +13,5 @@ public class HttpStatus {
 	public final static int ERROR = 5;
 	
 	// 业务状态码从100开始
+	
 }

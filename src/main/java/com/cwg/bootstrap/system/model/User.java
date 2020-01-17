@@ -16,7 +16,7 @@ public class User {
     @NotBlank(message = "密码不能为空")
     @Length(max = 20, min = 6, message = "密码长度必须在{min}~{max}之间")
     private String password;
-
+    
     private String email;
 
     private String salt;

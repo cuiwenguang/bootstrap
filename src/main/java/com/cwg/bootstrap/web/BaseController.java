@@ -58,8 +58,8 @@ public class BaseController {
 	}
 	
 	public void pager() {
-		int num = Integer.parseInt(request.getParameter("pageNum"));
-		int size = Integer.parseInt(request.getParameter("pageSize"));
+		int num = Integer.parseInt(request.getParameter("page"));
+		int size = Integer.parseInt(request.getParameter("size"));
 		PageHelper.startPage(num, size);
 	}
 }

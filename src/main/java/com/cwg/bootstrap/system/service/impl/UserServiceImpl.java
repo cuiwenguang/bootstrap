@@ -20,10 +20,10 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public boolean create(User user) {
-		String pwd = new Md5Hash(user.getPassword(), user.getSalt(), 2).toString();
-		String salt = String.valueOf(new Random().nextInt(10000)); 
-		user.setPassword(pwd);
+		String salt = String.valueOf(new Random().nextInt(10000));
 		user.setSalt(salt);
+		String pwd = new Md5Hash(user.getPassword(), user.getSalt(), 2).toString();
+		user.setPassword(pwd);
 		return userMapper.insert(user) > 0;
 	}
 
